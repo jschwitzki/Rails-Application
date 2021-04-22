@@ -1,0 +1,41 @@
+<%= link_to "Home", root_path %>
+<h1><%= @article.title %></h1>
+
+<p><%= @article.body %></p>
+
+<ul>
+  <li><%= link_to "Editar artigo", edit_article_path(@article) %></li>
+  <li><%= link_to "Excluir artigo", article_path(@article),
+                  method: :delete,
+                  data: { confirm: "Deseja deletar o artigo?" } %></li>
+</ul>
+
+<h2>Comments</h2>
+<% @article.comments.each do |comment| %>
+  <p>
+    <strong>Nome:</strong>
+    <%= comment.commenter %>
+  </p>
+
+  <p>
+    <strong>Comentário:</strong>
+    <%= comment.body %>
+  </p>
+<% end %>
+
+
+
+<h2>Poste um comentário:</h2>
+<%= form_with model: [ @article, @article.comments.build ] do |form| %>
+  <p>
+    <%= form.label :Nome %><br>
+    <%= form.text_field :commenter %>
+  </p>
+  <p>
+    <%= form.label :comentário %><br>
+    <%= form.text_area :body %>
+  </p>
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>
